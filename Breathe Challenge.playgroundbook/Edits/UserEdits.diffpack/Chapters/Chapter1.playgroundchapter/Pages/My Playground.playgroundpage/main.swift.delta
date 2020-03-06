@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Diff</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>import SwiftUI
+import PlaygroundSupport
+
+struct BreatheView: View {
+    @State private var numberCircles = 6.0
+    @State private var circleRadius = 50.0
+    @State private var innerRadius = 0.0
+    
+    @State private var rotating = false
+    @State private var expanding = false
+    @State private var radiating = false
+    
+    var body: some View {
+        
+        ZStack {
+            ForEach([Int](1...Int(numberCircles)), id: \.self) { item in
+                
+                Circle()
+                    .fill(Color.blue)
+                    .opacity(0.3)
+                    .scaleEffect(self.expanding ? 4.2 : 1.0) //scale size
+                    .frame(width: CGFloat(self.circleRadius), height: CGFloat(self.circleRadius))
+                    .offset(x: self.xPosition(item), y: self.yPosition(item))
+                    .animation(Animation
+                        .easeIn(duration: 5.0)
+                        .repeatForever(autoreverses: true)
+                )
+                
+            } // ForEach
+            
+            ForEach([Int](1...Int(numberCircles)), id: \.self) { item in
+                
+                Circle()
+                    .fill(Color.green)
+                    .opacity(0.3)
+                    .scaleEffect(self.expanding ? 4.0 : 0.8) //scale size
+                    .frame(width: CGFloat(self.circleRadius), height: CGFloat(self.circleRadius))
+                    .offset(x: self.xPosition(item), y: self.yPosition(item))
+                    .animation(Animation
+                        .easeIn(duration: 6.0)
+                        .repeatForever(autoreverses: true)
+                )
+                
+            } // ForEach
+            
+            
+            ForEach([Int](1...Int(numberCircles)), id: \.self) { item in
+                
+                Circle()
+                    .fill(Color.white)
+                    .opacity(0.3)
+                    .scaleEffect(self.expanding ? 3.0 : 0.5) //scale size
+                    .frame(width: CGFloat(self.circleRadius), height: CGFloat(self.circleRadius))
+                    .offset(x: self.xPosition(item), y: self.yPosition(item))
+                    .animation(Animation
+                        .easeIn(duration: 7.0)
+                        .repeatForever(autoreverses: true)
+                )
+                
+            } // ForEach
+            
+            
+        } // ZStack
+            .rotationEffect(.degrees(rotating ? 360 : 0))
+            .animation(
+                Animation.linear(duration: 30.0) // rotation duration
+                    .repeatForever(autoreverses: false)
+        )
+            .onAppear(){
+                self.rotating.toggle()
+                self.expanding.toggle()
+                withAnimation {
+                    self.innerRadius += 80
+                }
+        }
+        
+        
+    } // Body
+    
+    
+    func xPosition(_ item: Int ) -&gt; CGFloat {
+        let xPosition = cos(Double(item)) * innerRadius
+        return CGFloat(xPosition)
+    }
+    
+    func yPosition(_ item: Int ) -&gt; CGFloat {
+        let yPosition = sin(Double(item)) * innerRadius
+        return CGFloat(yPosition)
+    }
+    
+} // View
+
+PlaygroundPage.current.setLiveView(BreatheView())
+
+</string>
+			<key>ModifiedRange</key>
+			<string>{1, 3221}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>File</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/My Playground.playgroundpage/main.swift</string>
+</dict>
+</plist>
